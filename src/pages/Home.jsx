@@ -9,22 +9,24 @@ function Home() {
   return (
     <div>
       <Banner
-        title="Bienvenido a Mi Empresa Constructora"
+        title="La herramienta que soluciona el manejo de sus presupuestos ne su Empresa Constructora"
         subtitle="Soluciones integrales para tus proyectos"
         image={bannerImage}
       />
       <div className="home-container">
-        <h2>Precios Actualizados</h2>
-        <p>
-          Conoce los precios actuales de materiales de construcción,
-          mano de obra, herramientas y más.
-        </p>
+        <div className="sub-container"  style={{ textAlign: 'center', padding: '20px' }}>
+          <h2>Integracion completa</h2>
+          <p>
+            Conoce como nuestra herramienta puede proporcionarte mayor eficiencia a traves de las tecnologias de construcción,
+            Cada ves mas completo y en desarrollo con nuestra metodologia y más.
+          </p>
+        </div>
         <Horizontal 
         titulos= {['Sistema BIM', 'Catalogo Expres', 'Formato y Plantillas']}
         imagenes={[
-          '/images/image1.jpg',
-          '/images/image2.jpg',
-          '/images/image3.webp',
+          '/images/bim.png',
+          '/images/catalogo.webp',
+          '/images/formato.webp',
         ]}
         />
       </div>

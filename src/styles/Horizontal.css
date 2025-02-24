@@ -2,13 +2,14 @@
 
 .horizontal-container {
     display: flex; /* Organiza los divs en fila (horizontal) */
-    justify-content: space-between; /* Espacio entre los divs */
+    justify-content: center; /* Espacio entre los divs */
     align-items: center; /* Centra los divs verticalmente */
     gap: 20px; /* Espacio entre los divs */
     padding: 20px; /* Espacio dentro del contenedor */
   }
   
   .horizontal-item {
+    margin: 1rem 3rem;
     width: 19rem;
     height: 15rem;
     background-color: white; /* Fondo blanco para las tarjetas */
