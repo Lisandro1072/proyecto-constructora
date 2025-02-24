@@ -1,23 +1,40 @@
 // src/pages/Login.jsx
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import '../styles/Login.css'
+import React, { useState } from "react";
+import { auth, googleProvider } from "../firebaseConfig";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import "../styles/Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    // Por ahora solo se muestran los datos en la consola
-    console.log('Datos de login:', { email, password })
-    alert('Login enviado. Revisa la consola para ver los datos.')
-  }
+  const handleEmailLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      alert("Inicio de sesión exitoso");
+      navigate("/"); // Redirigir a Home u otra página
+    } catch (error) {
+      alert("Error en el login: " + error.message);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      alert("Inicio de sesión con Google exitoso");
+      navigate("/");
+    } catch (error) {
+      alert("Error con Google: " + error.message);
+    }
+  };
 
   return (
     <div className="login-container">
       <h2>Iniciar sesión</h2>
-      <form className="login-form" onSubmit={handleSubmit}>
+      <form className="login-form" onSubmit={handleEmailLogin}>
         <label htmlFor="email">Correo electrónico</label>
         <input
           type="email"
@@ -40,11 +57,12 @@ const Login = () => {
 
         <button type="submit">Iniciar sesión</button>
       </form>
-      <div className="register-section">
-        <p>¿No tienes una cuenta? <Link to="/register">Regístrate aquí</Link></p>
-      </div>
-    </div>
-  )
-}
 
-export default Login
+      <button className="google-login" onClick={handleGoogleLogin}>
+        Iniciar sesión con Google
+      </button>
+    </div>
+  );
+};
+
+export default Login;
