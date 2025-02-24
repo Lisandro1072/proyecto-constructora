@@ -9,6 +9,8 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import Servicios from './pages/Servicios'
 import Contact from './pages/Contact'
+import Login from './pages/Login'
+import Register from './pages/Register'
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/servicios" element={<Servicios />} />
         <Route path="/contacto" element={<Contact />} />
+        <Route path='/login' element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />
     </Router>
