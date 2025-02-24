@@ -1,0 +1,69 @@
+/* src/components/Horizontal.css */
+
+.horizontal-container {
+    display: flex; /* Organiza los divs en fila (horizontal) */
+    justify-content: center; /* Espacio entre los divs */
+    align-items: center; /* Centra los divs verticalmente */
+    gap: 20px; /* Espacio entre los divs */
+    padding: 20px; /* Espacio dentro del contenedor */
+  }
+  
+  .horizontal-item {
+    margin: 1rem 3rem;
+    width: 19rem;
+    height: 15rem;
+    background-color: white; /* Fondo blanco para las tarjetas */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    overflow: hidden; /* Asegura que los elementos dentro de la tarjeta no se salgan */
+    cursor: pointer; /* Para dar la sensación de interactividad */
+    transition: transform 0.3s ease-in-out; /* Suaviza la animación cuando se pasa el ratón */
+    display: flex;
+    flex-direction: column; /* Organiza los divs hijos en columna */
+  }
+  
+  /* Efecto hover: cuando el ratón pasa por encima de la tarjeta */
+  .horizontal-item:hover {
+    transform: scale(1.05); /* Aumenta ligeramente el tamaño de la tarjeta */
+  }
+  
+  /* Estilo para el div interior con el primer texto (horizontal-marca) */
+  .horizontal-marca {
+    display: flex;
+    align-items: center; /* Centra el texto verticalmente */
+    justify-content: center; /* Centra el texto horizontalmente */
+    width: 100%;
+    height: 100%; /* Ocupa la mitad de la altura inicialmente */
+    background-color: white; /* Fondo blanco */
+    color: black; /* Color del texto */
+    font-size: 20px;
+    font-weight: bold; /* Fuente en negrita */
+    text-align: center;
+    transition: all 0.5s ease; /* Suaviza todos los cambios de estilo */
+  }
+  
+  /* Estilo para el div interior con la imagen (horizontal-img) */
+  .horizontal-img {
+    width: 100%;
+    height: 0%; /* Ocupa la otra mitad de la altura inicialmente */
+    background-color: #ccc; /* Fondo gris para representar la imagen */
+    transition: all 0.5s ease; /* Suaviza la transición de tamaño */
+  }
+
+.horizontal-img img {
+    width: 100%; /* La imagen ocupa todo el espacio del div */
+    height: 100%; /* La imagen ocupa toda la altura */
+    object-fit: cover; /* Asegura que la imagen cubra todo el espacio del div sin distorsionarse */
+}
+  
+  /* Efecto hover sobre el contenedor: cuando se pasa el ratón sobre el contenedor (horizontal-item) */
+  .horizontal-item:hover .horizontal-marca {
+    background-color: red; /* Cambia el fondo a rojo */
+    color: white; /* Cambia el texto a blanco */
+    height: 25%; /* Reduce la altura a la mitad */
+  }
+  
+  .horizontal-item:hover .horizontal-img {
+    height: 75%; /* Expande la imagen para ocupar el espacio restante */
+  }
+  
