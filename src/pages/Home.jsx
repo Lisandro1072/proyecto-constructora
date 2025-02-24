@@ -2,6 +2,8 @@
 import React from 'react'
 import Banner from '../components/Banner'
 import bannerImage from '../assets/construction.jpeg' // Ruta a tu imagen
+import Carousel from '../components/Carousel'
+import Horizontal from '../components/Horizontal'
 
 function Home() {
   return (
@@ -17,8 +19,22 @@ function Home() {
           Conoce los precios actuales de materiales de construcción,
           mano de obra, herramientas y más.
         </p>
-        {/* Aquí podrías agregar tarjetas, secciones con publicidad, etc. */}
+        <Horizontal 
+        titulos= {['Sistema BIM', 'Catalogo Expres', 'Formato y Plantillas']}
+        imagenes={[
+          '/images/image1.jpg',
+          '/images/image2.jpg',
+          '/images/image3.webp',
+        ]}
+        />
       </div>
+      <Carousel 
+       images={[
+        '/images/image1.jpg',
+        '/images/image2.jpg',
+        '/images/image3.webp',
+      ]}
+      />
     </div>
   )
 }
