@@ -1,16 +1,10 @@
-/* src/styles/Navbar.css */
-
+/* Estilos para Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--color-primary);
   padding: 1rem;
-}
-
-.navbar-logo h1 {
-  color: var(--color-text);
-  margin: 0;
 }
 
 .navbar-links {
@@ -25,6 +19,52 @@
   font-weight: bold;
 }
 
-.navbar-links li a:hover {
-  color: var(--color-secondary);
+.login-button {
+  background-color: var(--color-secondary);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+/* Asegurar que el menú desplegable se sobreponga correctamente */
+.user-menu {
+  position: relative;
+}
+
+.user-menu button {
+  background-color: transparent;
+  border: none;
+  color: rgb(0, 0, 0);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  z-index: 1000; /* Asegura que esté sobre todo */
+}
+
+.dropdown-menu a,
+.dropdown-menu button {
+  padding: 12px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu button:hover {
+  background-color: #f1f1f1;
 }

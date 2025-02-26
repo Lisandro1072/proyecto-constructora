@@ -1,39 +1,62 @@
 // src/pages/Register.jsx
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import '../styles/Register.css'
+import React, { useState } from "react";
+import { auth } from "../firebaseConfig";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import "../styles/Register.css";
 
 const Register = () => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState({ type: "", text: "" });
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    if(password !== confirmPassword) {
-      alert('Las contraseñas no coinciden')
-      return
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setMessage({ type: "", text: "" });
+
+    if (password !== confirmPassword) {
+      setMessage({ type: "error", text: "Las contraseñas no coinciden." });
+      return;
     }
-    console.log('Datos de registro:', { username, email, password })
-    alert('Registro enviado. Revisa la consola para ver los datos.')
-  }
+
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      setMessage({ type: "success", text: "Registro exitoso. Redirigiendo..." });
+      setTimeout(() => navigate("/login"), 2000);
+    } catch (error) {
+      let errorMessage = "Error al registrar.";
+      switch (error.code) {
+        case "auth/email-already-in-use":
+          errorMessage = "El correo electrónico ya está en uso.";
+          break;
+        case "auth/invalid-email":
+          errorMessage = "El correo electrónico no es válido.";
+          break;
+        case "auth/weak-password":
+          errorMessage = "La contraseña debe tener al menos 6 caracteres.";
+          break;
+        default:
+          errorMessage = "Error en el registro: " + error.message;
+      }
+      setMessage({ type: "error", text: errorMessage });
+    }
+  };
 
   return (
     <div className="register-container">
-      <h2>Registrarse</h2>
-      <form className="register-form" onSubmit={handleSubmit}>
-        <label htmlFor="username">Nombre de usuario</label>
-        <input
-          type="text"
-          id="username"
-          placeholder="Tu nombre de usuario"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
+      <h2>Crear Cuenta</h2>
 
-        <label htmlFor="email">Correo electrónico</label>
+      {/* Mostrar mensajes de éxito o error */}
+      {message.text && (
+        <div className={`message ${message.type}`}>
+          {message.text}
+        </div>
+      )}
+
+      <form className="register-form" onSubmit={handleRegister}>
+        <label htmlFor="email">Correo Electrónico</label>
         <input
           type="email"
           id="email"
@@ -53,7 +76,7 @@ const Register = () => {
           required
         />
 
-        <label htmlFor="confirmPassword">Confirmar contraseña</label>
+        <label htmlFor="confirmPassword">Confirmar Contraseña</label>
         <input
           type="password"
           id="confirmPassword"
@@ -65,11 +88,8 @@ const Register = () => {
 
         <button type="submit">Registrarse</button>
       </form>
-      <div className="login-redirect">
-        <p>¿Ya tienes cuenta? <Link to="/login">Inicia sesión aquí</Link></p>
-      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

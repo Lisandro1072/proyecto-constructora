@@ -1,27 +1,49 @@
 // src/pages/Home.jsx
-import React from 'react'
-import Banner from '../components/Banner'
-import bannerImage from '../assets/construction.jpeg' // Ruta a tu imagen
+import React from "react";
+import "../styles/Home.css";
+import { Link } from "react-router-dom";
 import Carousel from '../components/Carousel'
 import Horizontal from '../components/Horizontal'
 
-function Home() {
+const Home = () => {
   return (
-    <div>
-      <Banner
-        title="La herramienta que soluciona el manejo de sus presupuestos ne su Empresa Constructora"
-        subtitle="Soluciones integrales para tus proyectos"
-        image={bannerImage}
-      />
-      <div className="home-container">
-        <div className="sub-container"  style={{ textAlign: 'center', padding: '20px' }}>
-          <h2>Integracion completa</h2>
-          <p>
-            Conoce como nuestra herramienta puede proporcionarte mayor eficiencia a traves de las tecnologias de construcción,
-            Cada ves mas completo y en desarrollo con nuestra metodologia y más.
-          </p>
+    <div className="home-container">
+      {/* Banner principal */}
+      <div className="hero">
+        <div className="hero-overlay">
+          <h1>La herramienta que soluciona el manejo de sus presupuestos</h1>
+          <p>Soluciones integrales para tus proyectos</p>
         </div>
-        <Horizontal 
+      </div>
+
+      {/* Sección de características */}
+      <section className="features">
+        <h2>Integración completa</h2>
+        <p>Conoce cómo nuestra herramienta proporciona mayor eficiencia con las mejores tecnologías de construcción.</p>
+
+        <div className="feature-grid">
+          <div className="feature-card">
+            <h3>Sistema BIM</h3>
+            <p>Optimiza tus proyectos con modelado 3D y análisis avanzado.</p>
+          </div>
+          <div className="feature-card">
+            <h3>Catálogo Exprés</h3>
+            <p>Accede a una base de datos actualizada con los mejores materiales y costos.</p>
+          </div>
+          <div className="feature-card">
+            <h3>Formatos y Plantillas</h3>
+            <p>Automatiza y mejora la gestión de documentos en cada fase del proyecto.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Llamado a la acción */}
+      <div className="cta">
+        <h2>Optimiza tu empresa hoy</h2>
+        <p>Únete y comienza a mejorar la gestión de tus presupuestos con nuestra plataforma.</p>
+        <Link to="/register" className="cta-button">Regístrate Gratis</Link>
+      </div>
+      <Horizontal 
         titulos= {['Sistema BIM', 'Catalogo Expres', 'Formato y Plantillas']}
         imagenes={[
           '/images/bim.png',
@@ -29,8 +51,7 @@ function Home() {
           '/images/formato.webp',
         ]}
         />
-      </div>
-      <Carousel 
+<Carousel 
        images={[
         '/images/image1.jpg',
         '/images/image2.jpg',
@@ -38,7 +59,8 @@ function Home() {
       ]}
       />
     </div>
-  )
-}
+    
+  );
+};
 
-export default Home
+export default Home;
