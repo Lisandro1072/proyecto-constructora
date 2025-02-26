@@ -1,7 +1,8 @@
 // src/pages/Register.jsx
 import React, { useState } from "react";
-import { auth } from "../firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../firebaseConfig";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import "../styles/Register.css";
 
@@ -9,8 +10,15 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [phone, setPhone] = useState("");
   const [message, setMessage] = useState({ type: "", text: "" });
   const navigate = useNavigate();
+
+  const validatePassword = (password) => {
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return regex.test(password);
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -21,26 +29,27 @@ const Register = () => {
       return;
     }
 
+    if (!validatePassword(password)) {
+      setMessage({ type: "error", text: "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial." });
+      return;
+    }
+
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      await updateProfile(user, { displayName: fullName });
+
+      // Guardar datos en Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        fullName,
+        email,
+        phone,
+      });
+
       setMessage({ type: "success", text: "Registro exitoso. Redirigiendo..." });
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
-      let errorMessage = "Error al registrar.";
-      switch (error.code) {
-        case "auth/email-already-in-use":
-          errorMessage = "El correo electrónico ya está en uso.";
-          break;
-        case "auth/invalid-email":
-          errorMessage = "El correo electrónico no es válido.";
-          break;
-        case "auth/weak-password":
-          errorMessage = "La contraseña debe tener al menos 6 caracteres.";
-          break;
-        default:
-          errorMessage = "Error en el registro: " + error.message;
-      }
-      setMessage({ type: "error", text: errorMessage });
+      setMessage({ type: "error", text: error.message });
     }
   };
 
@@ -48,43 +57,23 @@ const Register = () => {
     <div className="register-container">
       <h2>Crear Cuenta</h2>
 
-      {/* Mostrar mensajes de éxito o error */}
-      {message.text && (
-        <div className={`message ${message.type}`}>
-          {message.text}
-        </div>
-      )}
+      {message.text && <div className={`message ${message.type}`}>{message.text}</div>}
 
       <form className="register-form" onSubmit={handleRegister}>
-        <label htmlFor="email">Correo Electrónico</label>
-        <input
-          type="email"
-          id="email"
-          placeholder="tu@correo.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <label>Nombre Completo</label>
+        <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
 
-        <label htmlFor="password">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="********"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <label>Correo Electrónico</label>
+        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
 
-        <label htmlFor="confirmPassword">Confirmar Contraseña</label>
-        <input
-          type="password"
-          id="confirmPassword"
-          placeholder="********"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
+        <label>Teléfono</label>
+        <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} required />
+
+        <label>Contraseña</label>
+        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+
+        <label>Confirmar Contraseña</label>
+        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
 
         <button type="submit">Registrarse</button>
       </form>
