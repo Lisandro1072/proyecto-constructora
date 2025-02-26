@@ -11,11 +11,13 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register"; // Importar el registro
 import Perfil from "./pages/Perfil";
+import "./App.css";
 
 function App() {
   return (
     <Router>
       <Navbar />
+      <div className="main-content">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/servicios" element={<Servicios />} />
@@ -24,6 +26,7 @@ function App() {
         <Route path="/register" element={<Register />} /> {/* Nueva ruta */}
         <Route path="/perfil" element={<Perfil />} />
       </Routes>
+      </div>
       <Footer />
     </Router>
   );

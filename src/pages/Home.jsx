@@ -7,7 +7,7 @@ import Horizontal from '../components/Horizontal'
 
 const Home = () => {
   return (
-    <div className="home-container">
+    <div className="main-content home-container">
       {/* Banner principal */}
       <div className="hero">
         <div className="hero-overlay">
