@@ -1,5 +1,8 @@
-/* Asegura que todas las páginas respeten el espacio del navbar */
-.main-content {
-    margin-top: 80px; /* Ajusta el valor si es necesario */
-    padding: 20px; /* Opcional, para mejorar la presentación */
-}
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #0f0f11; /* Fondo oscuro consistente */
+    color: #ffffff;
+  }
+ 

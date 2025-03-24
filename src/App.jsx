@@ -5,9 +5,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 // Páginas
-import Home from "./pages/Home";
+import Inicio from "./pages/Inicio";
 import Servicios from "./pages/Servicios";
-import Contact from "./pages/Contact";
+import Contacto from "./pages/Contacto";
 import Login from "./pages/Login";
 import Register from "./pages/Register"; // Importar el registro
 import Perfil from "./pages/Perfil";
@@ -19,12 +19,13 @@ function App() {
       <Navbar />
       <div className="main-content">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Inicio />} />
         <Route path="/servicios" element={<Servicios />} />
-        <Route path="/contacto" element={<Contact />} />
+        <Route path="/contacto" element={<Contacto />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} /> {/* Nueva ruta */}
         <Route path="/perfil" element={<Perfil />} />
+        
       </Routes>
       </div>
       <Footer />

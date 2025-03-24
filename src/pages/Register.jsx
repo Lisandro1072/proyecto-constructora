@@ -1,82 +1,46 @@
 // src/pages/Register.jsx
 import React, { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebaseConfig";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import "../styles/Register.css";
+import "../styles/Auth.css";
 
 const Register = () => {
+  const [nombre, setNombre] = useState("");
+  const [compania, setCompania] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState({ type: "", text: "" });
   const navigate = useNavigate();
 
-  const validatePassword = (password) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    return regex.test(password);
-  };
-
-  const handleRegister = async (e) => {
+  const registerUser = async (e) => {
     e.preventDefault();
-    setMessage({ type: "", text: "" });
-
-    if (password !== confirmPassword) {
-      setMessage({ type: "error", text: "Las contraseñas no coinciden." });
-      return;
-    }
-
-    if (!validatePassword(password)) {
-      setMessage({ type: "error", text: "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial." });
-      return;
-    }
-
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      const user = userCredential.user;
-      await updateProfile(user, { displayName: fullName });
-
-      // Guardar datos en Firestore
-      await setDoc(doc(db, "users", user.uid), {
-        fullName,
-        email,
-        phone,
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, "users", cred.user.uid), {
+        nombre,
+        compania,
+        email
       });
-
-      setMessage({ type: "success", text: "Registro exitoso. Redirigiendo..." });
-      setTimeout(() => navigate("/login"), 2000);
+      navigate("/");
     } catch (error) {
-      setMessage({ type: "error", text: error.message });
+      alert("Error al registrar: " + error.message);
     }
   };
 
   return (
-    <div className="register-container">
-      <h2>Crear Cuenta</h2>
-
-      {message.text && <div className={`message ${message.type}`}>{message.text}</div>}
-
-      <form className="register-form" onSubmit={handleRegister}>
-        <label>Nombre Completo</label>
-        <input type="text" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
-
-        <label>Correo Electrónico</label>
-        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-
-        <label>Teléfono</label>
-        <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-
-        <label>Contraseña</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-
-        <label>Confirmar Contraseña</label>
-        <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-
-        <button type="submit">Registrarse</button>
-      </form>
+    <div className="auth-container">
+      <div className="auth-box register-box">
+        <h2>Crea una cuenta</h2>
+        <form onSubmit={registerUser}>
+          <input type="text" placeholder="Nombre completo" value={nombre} onChange={e => setNombre(e.target.value)} required />
+          <input type="text" placeholder="Nombre de la Compañía" value={compania} onChange={e => setCompania(e.target.value)} required />
+          <input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required />
+          <input type="password" placeholder="Contraseña (mínimo 6 caracteres)" value={password} onChange={e => setPassword(e.target.value)} required />
+          <button type="submit">Registrar</button>
+        </form>
+        <p>¿Ya tienes cuenta? <a href="/login">Iniciar sesión</a></p>
+      </div>
     </div>
   );
 };

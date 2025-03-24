@@ -1,60 +1,60 @@
-// src/pages/Servicios.jsx
-import React from 'react'
+import React from 'react';
+import '../styles/Servicios.css';
+import { FaTools, FaHardHat, FaDraftingCompass, FaFileAlt, FaCalculator } from 'react-icons/fa';
+import { MdDesignServices } from 'react-icons/md';
 
-function Servicios() {
+const Servicios = () => {
   return (
-    <div className="servicios-container">
-      <h2>Nuestros Servicios</h2>
-      <section className="contactanos">
-      <h2>ASESORIA EN CONSTRUCCION</h2>
-      <p>Si necesitas asesoria en construccion contactanos..</p>
-      <button className="btn-descargar">☎ CONTACTACTAR A UN OPERADOR</button>
-      </section>
+    <section className="servicios-section">
+      <h2 className="titulo-servicios">Nuestros Servicios</h2>
 
+      <div className="servicios-grid">
 
-      <section className="ventas">
-      <h2>VENTA DE MATERIALES Y HERRAMIENTAS</h2>
-      <p>Que material estas buscando</p>
-      <div className="search-container">
-      <input type="text" className="search-box" placeholder="Buscar material..." />
-      <button className="btn-buscar">Buscar</button>
+        {/* Asesoría en Construcción */}
+        <div className="servicio-card">
+          <FaHardHat className="icono-servicio" />
+          <h3>Asesoría en Construcción</h3>
+          <p>Brindamos apoyo técnico profesional para tus proyectos de construcción.</p>
+        </div>
+
+        {/* Catálogo de Materiales y Herramientas */}
+        <div className="servicio-card">
+          <FaTools className="icono-servicio" />
+          <h3>Catálogo de Materiales</h3>
+          <p>Consulta precios actualizados y stock de materiales y herramientas en tiempo real.</p>
+        </div>
+
+        {/* Mano de Obra Especializada */}
+        <div className="servicio-card">
+          <FaDraftingCompass className="icono-servicio" />
+          <h3>Mano de Obra Especializada</h3>
+          <p>Conecta con profesionales de confianza según el tipo de obra que necesites.</p>
+        </div>
+
+        {/* Diseño 3D BIM Interactivo */}
+        <div className="servicio-card">
+          <MdDesignServices className="icono-servicio" />
+          <h3>Diseño 3D BIM</h3>
+          <p>Visualiza y ajusta tu proyecto con tecnología de modelado avanzado.</p>
+        </div>
+
+        {/* Formatos y Plantillas */}
+        <div className="servicio-card">
+          <FaFileAlt className="icono-servicio" />
+          <h3>Formatos y Plantillas</h3>
+          <p>Automatiza tus documentos y controla cada fase del proyecto fácilmente.</p>
+        </div>
+
+        {/* Cotizaciones Inteligentes */}
+        <div className="servicio-card">
+          <FaCalculator className="icono-servicio" />
+          <h3>Cotizaciones Inteligentes</h3>
+          <p>Genera presupuestos detallados de forma rápida y profesional.</p>
+        </div>
+
       </div>
-      <p>Que herramienta estas buscando</p>
-      <div className="search-container">
-      <input type="text" className="search-box" placeholder="Buscar herramienta..." />
-      <button className="btn-buscar">Buscar</button>
-      </div>
-      </section>
+    </section>
+  );
+};
 
-
-      <section className="precio">
-      <h2>PRECIOS DE MANO DE OBRA</h2>
-      <p>Que tipo de inmueble necesitas construir</p>
-      <select className="select-inmueble">
-      <option value="casa">Casa</option>
-      <option value="escuela">Escuela</option>
-      <option value="edificio">Edificio</option>
-      </select>
-      <p>Numeros de pisos a construir</p>
-      <select className="select-inmueble">
-      <option value="primer">1</option>
-      <option value="segundo">2</option>
-      <option value="terceri">3</option>
-      </select>
-      </section>
-
-
-      <section className="publicidad para constructoras asociadas">
-      <h2>PUBLICIDAD PARA CONSTRUCTORAS ASOCIADAS</h2>
-      <p>Estas son nuestras constructoras asosiadas</p>
-      <div className="btn-container">
-      <button className="btn-constructora">Constructora A</button>
-      <button className="btn-constructora">Constructora B</button>
-      <button className="btn-constructora">Constructora C</button>
-      </div>   
-      </section>
-    </div>
-  )
-}
-
-export default Servicios
+export default Servicios;
